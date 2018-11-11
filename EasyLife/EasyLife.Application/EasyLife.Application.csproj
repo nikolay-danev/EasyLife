@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EasyLife.Persistence\EasyLife.Persistence.csproj" />
+    <Folder Include="GlobalConstants\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GlobalConstants\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\EasyLife.Persistence\EasyLife.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
