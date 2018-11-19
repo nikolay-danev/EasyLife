@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EasyLife.Web.App.Data.Migrations
+namespace EasyLife.Persistence.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

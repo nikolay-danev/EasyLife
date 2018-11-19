@@ -1,0 +1,73 @@
+﻿@using EasyLife.Domain.ViewModels
+@model ServiceViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="text-center">
+    <h2 class="display-4">Create Service</h2>
+</div>
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+        <div class="row justify-content-center">
+            <div class="col-md-10 offset-md-1">
+                <span class="anchor" id="formComplex"></span>
+                <hr class="my-5">
+                <!-- form complex example -->
+                <div class="card card-outline-secondary">
+                    <div class="card-header">
+                        <h3 class="mb-0">Service data</h3>
+                    </div>
+                    <div class="card-body">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="row col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ServiceTitle"></label>
+                                <input asp-for="ServiceTitle" class="form-control" placeholder="e.g. Irrigation system"/>
+                                <span asp-validation-for="ServiceTitle" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <textarea asp-for="Description" class="form-control" rows="6" cols="100"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                                <small class="text-muted">Add description here.</small>
+                            </div>
+                            <div class="btn-group-vertical" data-toggle="buttons">
+                                <label>Service Type</label>
+                                <label class="btn btn-secondary active" style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType" checked value="Interior planting"> Interior planting
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType"value="Removing snow" > Removing snow
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType" value="Landscape design"> Landscape design
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio"asp-for="ServiceType"  name="ServiceType" id="ServiceType" value="Irrigation systems"> Irrigation systems
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType"value="Planting" > Planting
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType" value="Designing pathways"> Designing pathways
+                                </label>
+                                <label class="btn btn-secondary"style="margin-top:0px; margin-bottom:0px;">
+                                    <input type="radio" asp-for="ServiceType" name="ServiceType" id="ServiceType" value="Designing figures of flowers and bushes"> Designing figures of flowers and bushes
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MainImage"></label>
+                                <input asp-for="MainImage" type="file" name="MainImage" class="form-control" />
+                                <span asp-validation-for="MainImage" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-center align-content-center">
+                <div class="float-right text-center">
+                    <input class="btn btn-primary" type="submit" value="Create">
+                </div>
+            </div>
+        </div><!--/card-->
+</form>
