@@ -17,6 +17,7 @@ namespace EasyLife.Domain.Models
 		public string ServiceTitle { get; set; }
 
 		[Required(ErrorMessage = "Description is required.")]
+		[StringLength(300, ErrorMessage = "Service title should be less than 300 characters.")]
 		public string Description { get; set; }
 
 		[Required(ErrorMessage = "Main image is required.")]
@@ -31,5 +32,7 @@ namespace EasyLife.Domain.Models
 
 		[Required(ErrorMessage = "Service type is required.")]
 		public string ServiceType { get; set; }
+
+		public string AdditionalDescription { get; set; }
 	}
 }

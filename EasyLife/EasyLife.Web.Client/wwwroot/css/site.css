@@ -125,3 +125,288 @@ h5,
 .label a {
     color: inherit;
 }
+
+
+.card {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 300px;
+    background: rgb(255, 255, 255);
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 30px #555;
+}
+
+    .card .front {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+        transition: .4s;
+    }
+
+        .card .front:after {
+            content: "EasyLife";
+            width: 200px;
+            background: green;
+            position: absolute;
+            right: -66px;
+            top: 6px;
+            transform: rotate(45deg);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            transition: .4s;
+        }
+
+    .card:hover .front:after {
+        opacity: 0;
+    }
+
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    padding: 5px;
+    display: table;
+    opacity: 0;
+    transition: .4s;
+    transform: translateY(100%);
+}
+
+.card .front .title-front-card {
+    background: rgba(255,255,255,0.5);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #000;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition: .3s;
+}
+
+.back span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+    .back span ul {
+        padding-left: 0;
+    }
+
+        .back span ul li {
+            display: inline-block;
+            font-size: 32px;
+            margin: 10px
+        }
+
+.card:hover .back {
+    opacity: 1;
+    transform: translateY(0);
+    background: rgba(0,0,0,0.8);
+}
+
+.card:hover .front {
+    transform: scale(1.15);
+}
+
+.card:hover .title-front-card {
+    opacity: 0;
+}
+
+.button {
+    font-size: 5vw;
+    border: none;
+    background-color: #ebebf0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    z-index: 1;
+    padding: 0;
+}
+
+@media (min-width: 40em) {
+    .button {
+        font-size: 2em;
+    }
+}
+
+.button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 10px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 10, 50, 0.2);
+    transition: -webkit-transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    transition: transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    transition: transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9), -webkit-transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    -webkit-transform: translate3D(0, 0, 0);
+    transform: translate3D(0, 0, 0);
+}
+
+.button:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ebebf0;
+    z-index: -1;
+}
+
+.button:hover:before, .button:focus:before {
+    -webkit-transform: translate3D(10px, 0, 0);
+    transform: translate3D(10px, 0, 0);
+}
+
+.button:active:before {
+    -webkit-transform: translate3D(0, 0, 0);
+    transform: translate3D(0, 0, 0);
+}
+
+.button:focus, .button:active {
+    outline: none;
+}
+
+.button .button__inner {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #333;
+    padding: 1em 1.5em;
+    background-color: #fbfbfb;
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: -webkit-transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    transition: transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    transition: transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9), -webkit-transform 0.6s cubic-bezier(0, 0.9, 0.13, 0.9);
+    position: relative;
+}
+
+.button:hover .button__inner, .button:focus .button__inner {
+    -webkit-transform: translate3D(0, -10px, 0);
+    transform: translate3D(0, -10px, 0);
+}
+
+.button:active .button__inner {
+    -webkit-transform: translate3D(0, 0, 0);
+    transform: translate3D(0, 0, 0);
+}
+
+.button:hover .button__inner, .button:focus .button__inner {
+    background-color: #fff;
+}
+
+.button--secondary {
+    background-color: #00d18e;
+    z-index: 0;
+}
+
+    .button--secondary:after {
+        background-color: #00d18e;
+    }
+
+    .button--secondary .button__inner {
+        background-color: #28a745;
+    }
+
+    .button--secondary:hover .button__inner, .button--secondary:focus .button__inner {
+        background-color: #11ffb3;
+    }
+
+.carouselImageTextBackground {
+    background-color: #00d18e;
+    border: 1px solid grey;
+}
+
+.facebook {
+    background-color: #2e4a88;
+    box-shadow: 0 4px 0 #1B3D82;
+    text-shadow: 0 -1px -1px #1B3D82;
+    display: inline;
+    position: relative;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    padding: 14px 80px;
+}
+
+    .facebook:hover {
+        background-color: #354F84;
+    }
+
+    .facebook:active {
+        top: 2px;
+        box-shadow: 0 2px 0 #1B3D82;
+    }
+
+.twitter {
+    background-color: #008DDE;
+    box-shadow: 0 4px 0 #0078BD;
+    display: inline;
+    position: relative;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    padding: 14px 80px;
+}
+
+    .twitter:active {
+        top: 2px;
+        box-shadow: 0 2px 0 #0078BD;
+    }
+
+    .twitter:hover {
+        background-color: #1397D8;
+    }
+
+.google {
+    background-color: #CC3622;
+    box-shadow: 0 4px 0 #BA2714;
+    display: inline;
+    position: relative;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    padding: 14px 80px;
+}
+
+    .google:active {
+        top: 2px;
+        box-shadow: 0 2px 0 #BA2714;
+    }
+
+    .google:hover {
+        background-color: #D04829;
+    }
+
+

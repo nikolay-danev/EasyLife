@@ -44,10 +44,11 @@ namespace EasyLife.Web.Client.Controllers
 					ServiceTitle = model.ServiceTitle,
 					ServiceType = model.ServiceType,
 					Description = model.Description,
+					AdditionalDescription = model.AdditionalDescription,
 					CreatedOn = DateTime.UtcNow
 				};
 
-				var filePath = host.WebRootPath + "/images/" + $"{service.ServiceTitle.Replace(" ","")}.jpg";
+				var filePath = host.WebRootPath + "/images/" + $"{service.ServiceTitle.Replace(" ","").ToLower()}.jpg";
 
 				using (var stream = new FileStream(filePath, FileMode.Create))
 				{
@@ -56,7 +57,53 @@ namespace EasyLife.Web.Client.Controllers
 
 				await this.serviceManager.AddServiceAsync(service);
 			}
-			return this.View();
+			return this.Redirect("/Services/Index");
+		}
+
+		public IActionResult Index()
+		{
+			var services = this.serviceManager.GetAllServices();
+
+			var servicesModels = new List<ServiceViewModel>();
+
+			foreach (var service in services)
+			{
+				var imageUrl = GetImageUrl(service.ServiceTitle);
+				servicesModels.Add(new ServiceViewModel
+				{
+					Id = service.Id,
+					ServiceTitle = service.ServiceTitle,
+					ServiceType = service.ServiceType,
+					Description = service.Description,
+					ImageUrl = imageUrl
+				});
+			}
+
+			return this.View(servicesModels);
+		}
+
+
+		public async Task<IActionResult> Details(int id)
+		{
+			var service = await this.serviceManager.GetDetails(id);
+
+			var imageUrl = GetImageUrl(service.ServiceTitle);
+
+			var model = new ServiceViewModel
+			{
+				Description = service.Description,
+				ServiceTitle = service.ServiceTitle,
+				ServiceType = service.ServiceType,
+				AdditionalDescription = service.AdditionalDescription,
+				ImageUrl = imageUrl,
+			};
+
+			return this.View(model);
+		}
+
+		private string GetImageUrl(string serviceTitle)
+		{
+			return "/images/" + $"{serviceTitle.Replace(" ", "").ToLower()}.jpg";
 		}
 	}
 }

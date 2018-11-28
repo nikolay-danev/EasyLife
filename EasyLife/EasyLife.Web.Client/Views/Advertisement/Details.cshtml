@@ -1,0 +1,29 @@
+﻿@using EasyLife.Domain.ViewModels
+@model AdvertisementViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details for @Model.BusinessName</h2>
+
+<div class="card-deck">
+<div class="card">
+    <img class="card-img-top imageSize" src="@Model.ImageUrl" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Website url: <a href="@Model.Url">@Model.Url</a></h5>
+        <p class="card-text">Expires on: @Model.ExpirationDate.ToString("MM/dd/yyyy")</p>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted"> Created: @((DateTime.UtcNow - Model.CreatedOn).Days) days ago</small>
+        </div>
+    </div>
+</div>
+
+        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+        </div>

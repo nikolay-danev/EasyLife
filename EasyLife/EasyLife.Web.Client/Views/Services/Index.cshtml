@@ -1,0 +1,34 @@
+﻿@using EasyLife.Domain.ViewModels
+@model ICollection<ServiceViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="text-center">
+    <h1 class="display-4">Our Services</h1>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        @foreach (var service in Model)
+        {
+                <div class="col-lg-4 col-sm-6 mt-3">
+                    <div class="card">
+                        <div class="front" style="background-image: url('@service.ImageUrl');">
+                            <div class="title-front-card">
+                                <span>
+                                    @service.ServiceTitle
+                                </span>
+                            </div>
+                        </div>
+                        <div class="back">
+                            <span>
+                                @service.Description
+                                <br />
+                                <a class="btn btn-success mt-5" href="/Services/Details/@service.Id">Read more</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>

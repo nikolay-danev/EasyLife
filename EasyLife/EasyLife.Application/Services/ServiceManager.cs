@@ -3,6 +3,7 @@ using EasyLife.Domain.Models;
 using EasyLife.Persistence.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +24,14 @@ namespace EasyLife.Application.Services
 			await this.db.SaveChangesAsync();
 		}
 
-		public async Task GetDetails(int id)
+		public ICollection<Service> GetAllServices()
 		{
-			await this.db.Services.FindAsync(id);
+		     return this.db.Services.ToList();
+		}
+
+		public Task<Service> GetDetails(int id)
+		{
+			return this.db.Services.FindAsync(id);
 		}
 
 		public void RemoveService(Service service)

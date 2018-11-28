@@ -12,8 +12,10 @@ namespace EasyLife.Application.Services.Interfaces
 
 		void RemoveService(Service service);
 
-		Task GetDetails(int id);
+		Task<Service> GetDetails(int id);
 
 		void UpdateService(Service service);
+
+		ICollection<Service> GetAllServices();
 	}
 }

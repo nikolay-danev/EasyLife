@@ -11,6 +11,7 @@ using EasyLife.Application.Services.MiddlewareServices.MiddlewareExtensions;
 using EasyLife.Domain.Models;
 using EasyLife.Application.Services.Interfaces;
 using EasyLife.Application.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace EasyLife.Web.Client
 {
@@ -34,12 +35,13 @@ namespace EasyLife.Web.Client
             services.AddDbContext<EasyLifeDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>()
-                .AddRoles<IdentityRole>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddEntityFrameworkStores<EasyLifeDbContext>();
+			services.AddDefaultIdentity<User>()
+				.AddRoles<IdentityRole>()
+				.AddRoleManager<RoleManager<IdentityRole>>()
+				.AddEntityFrameworkStores<EasyLifeDbContext>();
 
-            services.Configure<IdentityOptions>(options =>
+			services.AddResponseCompression();
+			services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -47,6 +49,8 @@ namespace EasyLife.Web.Client
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
             });
+
+			services.AddScoped<IUserClaimsPrincipalFactory<User>, UserClaimsPrincipalFactory<User, IdentityRole>>();
 
             services.AddAuthentication()
                 .AddGoogle(googleOptions =>
@@ -61,6 +65,7 @@ namespace EasyLife.Web.Client
             }); ;
 
 			services.AddScoped<IServiceManager, ServiceManager>();
+			services.AddScoped<IAdvertisementManager, AdvertisementManager>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -77,8 +82,9 @@ namespace EasyLife.Web.Client
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseSeedRoles();
+
             app.UseHttpsRedirection();
+			app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

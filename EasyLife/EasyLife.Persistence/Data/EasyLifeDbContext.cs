@@ -7,19 +7,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyLife.Persistence.Data
 {
-    public class EasyLifeDbContext : IdentityDbContext
+    public class EasyLifeDbContext : IdentityDbContext<User>
     {
 		public DbSet<Service> Services { get; set; }
+		public DbSet<Advertisement> Advertisements { get; set; }
+		public DbSet<Donator> Donators { get; set; }
+		public DbSet<Office> Offices { get; set; }
 
 		public EasyLifeDbContext(DbContextOptions<EasyLifeDbContext> options)
             : base(options)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.Entity<User>().ToTable("Users", "dbo");
-        }
-    }
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			base.OnModelCreating(builder);
+			builder.Entity<Advertisement>()
+				.HasIndex(x => x.BusinessName).IsUnique();
+		}
+	}
 }

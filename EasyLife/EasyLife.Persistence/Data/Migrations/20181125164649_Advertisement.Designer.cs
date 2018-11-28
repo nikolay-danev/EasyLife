@@ -4,14 +4,16 @@ using EasyLife.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EasyLife.Web.Client.Data.Migrations
+namespace EasyLife.Persistence.Data.Migrations
 {
     [DbContext(typeof(EasyLifeDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181125164649_Advertisement")]
+    partial class Advertisement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,10 +26,6 @@ namespace EasyLife.Web.Client.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BusinessName")
-                        .IsRequired()
-                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedOn");
 
@@ -45,80 +43,9 @@ namespace EasyLife.Web.Client.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessName")
-                        .IsUnique();
-
                     b.HasIndex("CreatorId1");
 
                     b.ToTable("Advertisements");
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("OfficeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OfficeId");
-
-                    b.ToTable("City");
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("OfficeId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OfficeId");
-
-                    b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.Donator", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("AmountDonated");
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Donators");
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.Office", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Offices");
                 });
 
             modelBuilder.Entity("EasyLife.Domain.Models.Service", b =>
@@ -325,29 +252,6 @@ namespace EasyLife.Web.Client.Data.Migrations
                     b.HasOne("EasyLife.Domain.Models.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId1");
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.City", b =>
-                {
-                    b.HasOne("EasyLife.Domain.Models.Office", "Office")
-                        .WithMany("Cities")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.Country", b =>
-                {
-                    b.HasOne("EasyLife.Domain.Models.Office", "Office")
-                        .WithMany("Countries")
-                        .HasForeignKey("OfficeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EasyLife.Domain.Models.Donator", b =>
-                {
-                    b.HasOne("EasyLife.Domain.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,0 +1,20 @@
+﻿@using EasyLife.Domain.ViewModels
+@model ServiceViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Details for @Model.ServiceTitle</h1>
+
+    <p>@Model.Description</p>
+
+    <img src="@Model.ImageUrl" width="1200" height="440"/>
+
+    <h4 >@Model.AdditionalDescription</h4>
+
+    <a class="btn btn-success" href="javascript:history.back();">Back</a>
+</div>
+
+
