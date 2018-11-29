@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using EasyLife.Persistence.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EasyLife.Application.Services.MiddlewareServices.MiddlewareExtensions;
 using EasyLife.Domain.Models;
 using EasyLife.Application.Services.Interfaces;
 using EasyLife.Application.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using  AutoMapper;
+using EasyLife.Web.Client.Profile;
 
 namespace EasyLife.Web.Client
 {
@@ -66,7 +66,7 @@ namespace EasyLife.Web.Client
 
 			services.AddScoped<IServiceManager, ServiceManager>();
 			services.AddScoped<IAdvertisementManager, AdvertisementManager>();
-
+	        services.AddAutoMapper(x => x.AddProfile(new EasyLifeProfile()));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -87,7 +87,7 @@ namespace EasyLife.Web.Client
 			app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+			
             app.UseAuthentication();
 
             app.UseMvc(routes =>

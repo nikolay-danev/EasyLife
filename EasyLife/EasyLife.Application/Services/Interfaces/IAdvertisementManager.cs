@@ -15,5 +15,7 @@ namespace EasyLife.Application.Services.Interfaces
 		Task<Advertisement> Details(int id);
 
 		void UpdateAdvertisement(Advertisement advertisement);
+
+		Task<List<Advertisement>> All(User creator = null);
 	}
 }

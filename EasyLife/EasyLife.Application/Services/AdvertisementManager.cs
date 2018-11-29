@@ -3,8 +3,10 @@ using EasyLife.Domain.Models;
 using EasyLife.Persistence.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyLife.Application.Services
 {
@@ -38,6 +40,11 @@ namespace EasyLife.Application.Services
 		{
 			 this.db.Advertisements.Update(advertisement);
 			this.db.SaveChanges();
+		}
+
+		public Task<List<Advertisement>> All(User creator)
+		{
+			return this.db.Advertisements.Where(x => x.Creator == creator).ToListAsync();
 		}
 	}
 }

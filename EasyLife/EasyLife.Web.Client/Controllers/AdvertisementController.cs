@@ -1,5 +1,4 @@
-﻿using EasyLife.Application.Services;
-using EasyLife.Application.Services.Interfaces;
+﻿using EasyLife.Application.Services.Interfaces;
 using EasyLife.Domain.Models;
 using EasyLife.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace EasyLife.Web.Client.Controllers
 {
@@ -20,23 +20,41 @@ namespace EasyLife.Web.Client.Controllers
 		private readonly IAdvertisementManager advertisementManager;
 		private readonly UserManager<User> userManager;
 		private readonly IHostingEnvironment host;
+		private readonly IMapper mapper;
 
-		public AdvertisementController(IAdvertisementManager advertisementManager, UserManager<User> userManager, IHostingEnvironment host)
+
+		public AdvertisementController(IAdvertisementManager advertisementManager,
+			UserManager<User> userManager,
+			IHostingEnvironment host,
+			IMapper mapper)
 		{
 			this.advertisementManager = advertisementManager;
 			this.userManager = userManager;
 			this.host = host;
+			this.mapper = mapper;
 		}
 
 		[Authorize(Roles =  "Administrator")]
 		public IActionResult Index()
 		{
+
 			return this.View();
 		}
 
 		public IActionResult Create()
 		{
 			return this.View();
+		}
+
+		public async Task<IActionResult> MyAds()
+		{
+			var creator = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+
+			var userAdvertisements = await this.advertisementManager.All(creator);
+
+			var models = mapper.Map<List<AdvertisementViewModel>>(userAdvertisements);
+
+			return this.View(models);
 		}
 
 		[HttpPost]
@@ -81,13 +99,14 @@ namespace EasyLife.Web.Client.Controllers
 			var advertisement = await this.advertisementManager.Details(id);
 			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
-			if (advertisement.Creator != user)
+			if (advertisement == null || advertisement.Creator != user)
 			{
 				return this.Redirect("/Home/Index");
 			}
 			
 			var model = new AdvertisementViewModel
 			{
+				Id = advertisement.Id,
 				BusinessName = advertisement.BusinessName,
 				ExpirationDate = advertisement.ExpirationDate,
 				Url = advertisement.Url,

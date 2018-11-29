@@ -37,12 +37,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">Services</a>
                         </li>
-                        @if (User.IsInRole("Administrator"))
+                        @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Create Service</a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Tools
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="MyAds">My Ads</a>
+                                        <div class="dropdown-divider"></div>
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Create Service</a>
+                                        }
+                                    </div>
+                                </div>
                             </li>
+
                         }
+
                     </ul>
                 </div>
             </div>
@@ -56,7 +70,7 @@
         </main>
     </div>
 
-   
+
 
     <footer class="border-top footer text-muted">
         <div class="container" id="footerStyle">
