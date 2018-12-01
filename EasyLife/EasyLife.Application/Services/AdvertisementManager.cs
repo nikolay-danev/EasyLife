@@ -44,7 +44,11 @@ namespace EasyLife.Application.Services
 
 		public Task<List<Advertisement>> All(User creator)
 		{
-			return this.db.Advertisements.Where(x => x.Creator == creator).ToListAsync();
+			if (creator != null)
+			{
+				return this.db.Advertisements.Include(x => x.Creator).Where(x => x.Creator == creator).ToListAsync();
+			}
+			return this.db.Advertisements.Include(x => x.Creator).ToListAsync();
 		}
 	}
 }

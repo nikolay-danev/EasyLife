@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using EasyLife.Domain.GlobalConstants;
 
 namespace EasyLife.Web.Client.Controllers
 {
@@ -35,10 +36,23 @@ namespace EasyLife.Web.Client.Controllers
 		}
 
 		[Authorize(Roles =  "Administrator")]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
+			var ads = await this.advertisementManager.All();
 
-			return this.View();
+			var adsModels = mapper.Map<List<AdvertisementViewModel>>(ads);
+
+			return this.View(adsModels);
+		}
+
+		[Authorize(Roles = "Administrator")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			var ad = await this.advertisementManager.Details(id);
+
+			this.advertisementManager.DeleteAdvertisement(ad);
+
+			return Redirect("/Advertisement/Index");
 		}
 
 		public IActionResult Create()
@@ -86,6 +100,7 @@ namespace EasyLife.Web.Client.Controllers
 					ImageUrl = filePath,
 					BusinessName = model.BusinessName
 				};
+
 				await this.advertisementManager.CreateAdvertisement(advertisement);
 
 				return this.Redirect($"/Advertisement/Details/{advertisement.Id}");
@@ -97,24 +112,19 @@ namespace EasyLife.Web.Client.Controllers
 		public async Task<IActionResult> Details(int id)
 		{
 			var advertisement = await this.advertisementManager.Details(id);
-			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
-			if (advertisement == null || advertisement.Creator != user)
+			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this.userManager.GetRolesAsync(user);
+			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+
+			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
 			{
 				return this.Redirect("/Home/Index");
 			}
-			
-			var model = new AdvertisementViewModel
-			{
-				Id = advertisement.Id,
-				BusinessName = advertisement.BusinessName,
-				ExpirationDate = advertisement.ExpirationDate,
-				Url = advertisement.Url,
-				ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath,""),
-				CreatedOn = advertisement.CreatedOn
-			};
 
-			return this.View(model);
+			var viewModel = mapper.Map<AdvertisementViewModel>(advertisement);
+
+			return this.View(viewModel);
 		}
 	}
 }

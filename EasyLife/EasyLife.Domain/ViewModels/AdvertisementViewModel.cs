@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using EasyLife.Domain.Models;
 
 namespace EasyLife.Domain.ViewModels
 {
@@ -28,6 +29,8 @@ namespace EasyLife.Domain.ViewModels
 
 		[Required]
 		public DateTime CreatedOn { get; set; }
+
+		public User Creator { get; set; }
 
 		public string ImageUrl { get; set; }
 	}
