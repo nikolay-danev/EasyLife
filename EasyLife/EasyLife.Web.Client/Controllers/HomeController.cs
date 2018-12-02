@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using EasyLife.Domain.ViewModels;
+using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace EasyLife.Web.Client.Controllers
 {
@@ -15,26 +17,24 @@ namespace EasyLife.Web.Client.Controllers
             return View();
         }
 
+		[ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
+	    [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]
+		public IActionResult Contact()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+	    [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]
+		public IActionResult Privacy()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

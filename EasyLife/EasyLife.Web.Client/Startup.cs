@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -67,6 +68,8 @@ namespace EasyLife.Web.Client
 			services.AddScoped<IServiceManager, ServiceManager>();
 			services.AddScoped<IAdvertisementManager, AdvertisementManager>();
 	        services.AddAutoMapper(x => x.AddProfile(new EasyLifeProfile()));
+
+	        services.AddResponseCaching(opt => { opt.UseCaseSensitivePaths = false; });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -90,7 +93,9 @@ namespace EasyLife.Web.Client
 			
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
+	        app.UseResponseCaching();
+
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",

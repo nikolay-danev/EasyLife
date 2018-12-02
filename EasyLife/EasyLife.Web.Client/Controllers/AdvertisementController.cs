@@ -35,7 +35,7 @@ namespace EasyLife.Web.Client.Controllers
 			this.mapper = mapper;
 		}
 
-		[Authorize(Roles =  "Administrator")]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Index()
 		{
 			var ads = await this.advertisementManager.All();
@@ -86,7 +86,7 @@ namespace EasyLife.Web.Client.Controllers
 					Directory.CreateDirectory(directoryPath);
 				}
 
-					using (var stream = new FileStream(filePath, FileMode.Create))
+				using (var stream = new FileStream(filePath, FileMode.Create))
 				{
 					await model.ImageFile.CopyToAsync(stream);
 				}
@@ -125,6 +125,85 @@ namespace EasyLife.Web.Client.Controllers
 			var viewModel = mapper.Map<AdvertisementViewModel>(advertisement);
 
 			return this.View(viewModel);
+		}
+
+		public async Task<IActionResult> Edit(int id)
+		{
+			var advertisement = await this.advertisementManager.Details(id);
+
+			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this.userManager.GetRolesAsync(user);
+			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+
+			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
+			{
+				return this.Redirect("/Home/Index");
+			}
+
+			var viewModel = mapper.Map<AdvertisementViewModel>(advertisement);
+
+			return this.View(viewModel);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(AdvertisementViewModel model)
+		{
+			var advertisement = await this.advertisementManager.Details(model.Id);
+
+			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this.userManager.GetRolesAsync(user);
+
+			var isChanged = false;
+
+			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+
+			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
+			{
+				return this.Redirect("/Home/Index");
+			}
+
+			if (advertisement.BusinessName != model.BusinessName)
+			{
+				advertisement.BusinessName = model.BusinessName;
+				isChanged = true;
+			}
+
+			if (advertisement.Url != model.Url)
+			{
+				advertisement.Url = model.Url;
+				isChanged = true;
+			}
+
+			if (model.ImageFile != null)
+			{
+
+				var directoryPath = host.WebRootPath + "/images/advertisementImages/";
+				var filePath = directoryPath + $"{model.BusinessName.Replace(" ", "")}.jpg";
+
+				var currentImage = new FileInfo(filePath);
+
+				currentImage.Delete();
+
+				if (!Directory.Exists(directoryPath))
+				{
+					Directory.CreateDirectory(directoryPath);
+				}
+
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.ImageFile.CopyToAsync(stream);
+				}
+
+				advertisement.ImageUrl = filePath;
+				isChanged = true;
+			}
+
+			if (isChanged)
+			{
+				this.advertisementManager.UpdateAdvertisement(advertisement);
+			}
+
+			return Redirect("/Advertisement/Details/" + advertisement.Id);
 		}
 	}
 }

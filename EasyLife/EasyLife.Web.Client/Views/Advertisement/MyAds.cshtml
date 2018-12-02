@@ -19,13 +19,16 @@
         @for (int i = 0; i < @Model.Count; i++)
         {
             var currentAd = @Model.ToList()[i];
-        string[] status ={currentAd.ExpirationDate < DateTime.UtcNow ? "Inactive" : "Active"};
-
+            var status = "Active";
+            if (DateTime.UtcNow > currentAd.ExpirationDate)
+            {
+                status = "Inactive";
+            }
         <tr>
             <th scope="row">@(i + 1)</th>
             <td>@currentAd.BusinessName</td>
             <td><a href="@currentAd.Url" id="textDecorationNone">@currentAd.Url</a></td>
-            <td>@status[i]</td>
+            <td>@status</td>
             <td><a href="/Advertisement/Details/@currentAd.Id" class="btn btn-success">Details</a></td>
         </tr>
         }

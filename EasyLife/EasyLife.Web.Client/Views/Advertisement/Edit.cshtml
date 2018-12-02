@@ -1,0 +1,35 @@
+﻿@model EasyLife.Domain.ViewModels.AdvertisementViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Editing @Model.BusinessName ad</h2>
+</div>
+
+<div class="row text-center justify-content-center">
+    <div class="col-md-4 text-center">
+        <form asp-controller="Advertisement" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <hr class="bg-success"/>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group text-center">
+                <label asp-for="BusinessName"></label>
+                <input asp-for="BusinessName" class="form-control text-center" />
+                <span asp-validation-for="BusinessName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url"></label>
+                <input asp-for="Url" class="form-control text-center" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile">Current banner for your advertisement.</label>
+                <img src="@Model.ImageUrl" width="100" height="100"/>
+                <input asp-for="ImageFile" type="file" name="ImageFile" class="form-control mt-5" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+            <input hidden="" asp-for="Id" value="@Model.Id"/>
+            <button type="submit" class="btn btn-success">Edit</button>
+        </form>
+    </div>
+</div>
