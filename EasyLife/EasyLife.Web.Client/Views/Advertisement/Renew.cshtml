@@ -1,0 +1,55 @@
+﻿@model EasyLife.Domain.ViewModels.AdvertisementViewModel
+
+@{
+    ViewData["Title"] = "Renew";
+}
+<div class="text-center">
+    <h2 class="display-4">Renew your ad.</h2>
+    <small>Choose your subscription plan</small>
+</div>
+<div class="modalmock">
+    <form asp-controller="Advertisement" asp-action="Renew" method="post">
+        <input hidden="" name="id" value="@Model.Id" />
+        <div class="subscription-plan">
+            <div class="subscription-plan--price">
+                <span class="interval">15 days</span><br>10 <i class="fa fa-eur" aria-hidden="true"></i>
+                <div class="subscription-plan--box"></div>
+            </div>
+            <div class="subscription-plan--description">
+                Subscribe today and get<br> <strong>10%</strong> discount on our services.
+            </div>
+            <div class="subscription-plan--button">
+                <input name="subscriptionPlan" value="Basic" type="radio" />
+            </div>
+        </div>
+        <div class="subscription-plan">
+            <div class="subscription-plan--price">
+                <span class="interval">6 months</span><br>60 <i class="fa fa-eur" aria-hidden="true"></i>
+                <label for="subscriptionPlan"></label>
+                <div class="subscription-plan--box"></div>
+            </div>
+            <div class="subscription-plan--description">
+                Subscribe today and get<br> <strong>15%</strong> discount on our services.
+                <label for="subscriptionPlan"></label>
+            </div>
+            <div class="subscription-plan--button">
+
+                <input name="subscriptionPlan" value="Advanced" id="subscriptionPlan" type="radio" />
+            </div>
+        </div>
+        <div class="subscription-plan">
+            <div class="subscription-plan--price">
+                <span class="interval">1 years</span><br>120 <i class="fa fa-eur" aria-hidden="true"></i>
+                <div class="subscription-plan--box"></div>s
+            </div>
+            <div class="subscription-plan--description">
+                Subscribe today and get<br> <strong>25%</strong> discount on our services.
+            </div>
+            <div class="subscription-plan--button">
+                <input name="subscriptionPlan" value="Pro" type="radio" />
+            </div>
+        </div>
+        <hr class="bg-success" />
+        <button type="submit" class="btn btn-success">Renew</button>
+    </form>
+</div>

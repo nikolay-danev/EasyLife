@@ -7,14 +7,19 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <header>
@@ -52,7 +57,7 @@
                                         @if (User.IsInRole("Administrator"))
                                         {
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Create Service</a>
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="Index">Moderate ads</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="Index">Manage ads</a>
                                         }
                                     </div>
                                 </div>

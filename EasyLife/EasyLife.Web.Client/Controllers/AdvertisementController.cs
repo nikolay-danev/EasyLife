@@ -11,36 +11,37 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using EasyLife.Application.Services;
 using EasyLife.Domain.GlobalConstants;
+using EasyLife.Domain.GlobalConstatns;
 
 namespace EasyLife.Web.Client.Controllers
 {
 	[Authorize]
 	public class AdvertisementController : Controller
 	{
-		private readonly IAdvertisementManager advertisementManager;
-		private readonly UserManager<User> userManager;
-		private readonly IHostingEnvironment host;
-		private readonly IMapper mapper;
-
+		private readonly IAdvertisementManager _advertisementManager;
+		private readonly UserManager<User> _userManager;
+		private readonly IHostingEnvironment _host;
+		private readonly IMapper _mapper;
 
 		public AdvertisementController(IAdvertisementManager advertisementManager,
 			UserManager<User> userManager,
 			IHostingEnvironment host,
 			IMapper mapper)
 		{
-			this.advertisementManager = advertisementManager;
-			this.userManager = userManager;
-			this.host = host;
-			this.mapper = mapper;
+			this._advertisementManager = advertisementManager;
+			this._userManager = userManager;
+			this._host = host;
+			this._mapper = mapper;
 		}
 
 		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Index()
 		{
-			var ads = await this.advertisementManager.All();
+			var ads = await this._advertisementManager.All();
 
-			var adsModels = mapper.Map<List<AdvertisementViewModel>>(ads);
+			var adsModels = _mapper.Map<List<AdvertisementViewModel>>(ads);
 
 			return this.View(adsModels);
 		}
@@ -48,9 +49,9 @@ namespace EasyLife.Web.Client.Controllers
 		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			var ad = await this.advertisementManager.Details(id);
+			var ad = await this._advertisementManager.Details(id);
 
-			this.advertisementManager.DeleteAdvertisement(ad);
+			this._advertisementManager.DeleteAdvertisement(ad);
 
 			return Redirect("/Advertisement/Index");
 		}
@@ -62,11 +63,11 @@ namespace EasyLife.Web.Client.Controllers
 
 		public async Task<IActionResult> MyAds()
 		{
-			var creator = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var creator = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
-			var userAdvertisements = await this.advertisementManager.All(creator);
+			var userAdvertisements = await this._advertisementManager.All(creator);
 
-			var models = mapper.Map<List<AdvertisementViewModel>>(userAdvertisements);
+			var models = _mapper.Map<List<AdvertisementViewModel>>(userAdvertisements);
 
 			return this.View(models);
 		}
@@ -76,9 +77,9 @@ namespace EasyLife.Web.Client.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var currentUser = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+				var currentUser = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 
-				var directoryPath = host.WebRootPath + "/images/advertisementImages/";
+				var directoryPath = _host.WebRootPath + "/images/advertisementImages/";
 				var filePath = directoryPath + $"{model.BusinessName.Replace(" ", "")}.jpg";
 
 				if (!Directory.Exists(directoryPath))
@@ -101,7 +102,7 @@ namespace EasyLife.Web.Client.Controllers
 					BusinessName = model.BusinessName
 				};
 
-				await this.advertisementManager.CreateAdvertisement(advertisement);
+				await this._advertisementManager.CreateAdvertisement(advertisement);
 
 				return this.Redirect($"/Advertisement/Details/{advertisement.Id}");
 			}
@@ -111,36 +112,37 @@ namespace EasyLife.Web.Client.Controllers
 
 		public async Task<IActionResult> Details(int id)
 		{
-			var advertisement = await this.advertisementManager.Details(id);
+			var advertisement = await this._advertisementManager.Details(id);
 
-			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
-			var userRoles = await this.userManager.GetRolesAsync(user);
-			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+			var user = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this._userManager.GetRolesAsync(user);
+			//advertisement.ImageUrl = advertisement.ImageUrl.Replace(_host.WebRootPath, "");
+			advertisement.ImageUrl = ImageUrlRefactor.RefactorUrl(advertisement, _host.WebRootPath);
 
 			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
 			{
 				return this.Redirect("/Home/Index");
 			}
 
-			var viewModel = mapper.Map<AdvertisementViewModel>(advertisement);
+			var viewModel = _mapper.Map<AdvertisementViewModel>(advertisement);
 
 			return this.View(viewModel);
 		}
 
 		public async Task<IActionResult> Edit(int id)
 		{
-			var advertisement = await this.advertisementManager.Details(id);
+			var advertisement = await this._advertisementManager.Details(id);
 
-			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
-			var userRoles = await this.userManager.GetRolesAsync(user);
-			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+			var user = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this._userManager.GetRolesAsync(user);
+			advertisement.ImageUrl = advertisement.ImageUrl.Replace(_host.WebRootPath, "");
 
 			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
 			{
 				return this.Redirect("/Home/Index");
 			}
 
-			var viewModel = mapper.Map<AdvertisementViewModel>(advertisement);
+			var viewModel = _mapper.Map<AdvertisementViewModel>(advertisement);
 
 			return this.View(viewModel);
 		}
@@ -148,14 +150,14 @@ namespace EasyLife.Web.Client.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(AdvertisementViewModel model)
 		{
-			var advertisement = await this.advertisementManager.Details(model.Id);
+			var advertisement = await this._advertisementManager.Details(model.Id);
 
-			var user = this.userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
-			var userRoles = await this.userManager.GetRolesAsync(user);
+			var user = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
+			var userRoles = await this._userManager.GetRolesAsync(user);
 
 			var isChanged = false;
 
-			advertisement.ImageUrl = advertisement.ImageUrl.Replace(host.WebRootPath, "");
+			advertisement.ImageUrl = advertisement.ImageUrl.Replace(_host.WebRootPath, "");
 
 			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
 			{
@@ -177,7 +179,7 @@ namespace EasyLife.Web.Client.Controllers
 			if (model.ImageFile != null)
 			{
 
-				var directoryPath = host.WebRootPath + "/images/advertisementImages/";
+				var directoryPath = _host.WebRootPath + "/images/advertisementImages/";
 				var filePath = directoryPath + $"{model.BusinessName.Replace(" ", "")}.jpg";
 
 				var currentImage = new FileInfo(filePath);
@@ -200,10 +202,78 @@ namespace EasyLife.Web.Client.Controllers
 
 			if (isChanged)
 			{
-				this.advertisementManager.UpdateAdvertisement(advertisement);
+				this._advertisementManager.UpdateAdvertisement(advertisement);
 			}
 
 			return Redirect("/Advertisement/Details/" + advertisement.Id);
+		}
+
+		public async Task<IActionResult> Renew(int id)
+		{
+			var ad = await this._advertisementManager.Details(id);
+
+			if (ad == null || DateTime.UtcNow < ad.ExpirationDate)
+			{
+				return this.Redirect($"/Advertisement/Details/{id}");
+			}
+
+			var model = _mapper.Map<AdvertisementViewModel>(ad);
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Renew(int id, string subscriptionPlan)
+		{
+			var ad = await this._advertisementManager.Details(id);
+
+			var user = ad.Creator;
+
+			if (ad == null || DateTime.UtcNow < ad.ExpirationDate)
+			{
+				return this.Redirect($"/Advertisement/Details/{id}");
+			}
+
+			SetUserDiscount(user, subscriptionPlan);
+
+			UpdateAd(ad, subscriptionPlan);
+
+			return this.Redirect($"/Advertisement/Details/{id}");
+		}
+
+		private void UpdateAd(Advertisement ad, string subscriptionPlan)
+		{
+			if (subscriptionPlan == SubscriptionPlan.Basic)
+			{
+				ad.ExpirationDate = DateTime.UtcNow.AddDays(15);
+			}
+			else if (subscriptionPlan == SubscriptionPlan.Advanced)
+			{
+				ad.ExpirationDate = DateTime.UtcNow.AddMonths(6);
+			}
+			else if (subscriptionPlan == SubscriptionPlan.Pro)
+			{
+				ad.ExpirationDate = DateTime.UtcNow.AddYears(1);
+			}
+
+			this._advertisementManager.UpdateAdvertisement(ad);
+		}
+
+		private void SetUserDiscount(User user, string subscriptionPlan)
+		{
+			if (subscriptionPlan == SubscriptionPlan.Basic)
+			{
+				user.Discount = 0.1;
+			}
+			else if (subscriptionPlan == SubscriptionPlan.Advanced)
+			{
+				user.Discount = 0.15;
+			}
+			else if (subscriptionPlan == SubscriptionPlan.Pro)
+			{
+				user.Discount = 0.25;
+			}
+
+			this._userManager.UpdateAsync(user);
 		}
 	}
 }

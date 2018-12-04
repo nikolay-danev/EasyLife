@@ -15,5 +15,8 @@ namespace EasyLife.Domain.Models
         public DateTime CreatedOn { get; set; }
 
         public bool IsDeleted { get; set; }
+
+		[Range(0,double.MaxValue)]
+	    public double Discount { get; set; }
     }
 }

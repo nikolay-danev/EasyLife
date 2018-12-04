@@ -69,7 +69,7 @@ namespace EasyLife.Web.Client
 			services.AddScoped<IAdvertisementManager, AdvertisementManager>();
 	        services.AddAutoMapper(x => x.AddProfile(new EasyLifeProfile()));
 
-	        services.AddResponseCaching(opt => { opt.UseCaseSensitivePaths = false; });
+	        services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -90,10 +90,9 @@ namespace EasyLife.Web.Client
 			app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-			
-            app.UseAuthentication();
-
 	        app.UseResponseCaching();
+
+			app.UseAuthentication();
 
 			app.UseMvc(routes =>
             {

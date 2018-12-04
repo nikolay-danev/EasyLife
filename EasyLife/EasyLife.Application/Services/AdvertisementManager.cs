@@ -33,7 +33,7 @@ namespace EasyLife.Application.Services
 
 		public Task<Advertisement> Details(int id)
 		{
-			return this.db.Advertisements.FindAsync(id);
+			return this.db.Advertisements.Include(x => x.Creator).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public void UpdateAdvertisement(Advertisement advertisement)
@@ -50,5 +50,6 @@ namespace EasyLife.Application.Services
 			}
 			return this.db.Advertisements.Include(x => x.Creator).ToListAsync();
 		}
+
 	}
 }
