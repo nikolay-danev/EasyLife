@@ -68,6 +68,8 @@ namespace EasyLife.Web.Client
 			services.AddScoped<IServiceManager, ServiceManager>();
 			services.AddScoped<IAdvertisementManager, AdvertisementManager>();
 	        services.AddAutoMapper(x => x.AddProfile(new EasyLifeProfile()));
+	        services.AddScoped<IOfficeManager, OfficeManager>();
+	        services.AddScoped<IOrderManager, OrderManager>();
 
 	        services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

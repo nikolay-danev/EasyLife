@@ -11,10 +11,10 @@ namespace EasyLife.Persistence.Data
     {
 		public DbSet<Service> Services { get; set; }
 		public DbSet<Advertisement> Advertisements { get; set; }
-		public DbSet<Donator> Donators { get; set; }
 		public DbSet<Office> Offices { get; set; }
+		public DbSet<Order> Orders { get; set; }
 
-		public EasyLifeDbContext(DbContextOptions<EasyLifeDbContext> options)
+	    public EasyLifeDbContext(DbContextOptions<EasyLifeDbContext> options)
             : base(options)
         {
         }

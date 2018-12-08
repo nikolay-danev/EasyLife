@@ -4,17 +4,35 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<a class="btn btn-success" href="javascript:history.back();">Back</a>
 <div class="text-center">
     <h1 class="display-4">Details for @Model.ServiceTitle</h1>
 
     <p>@Model.Description</p>
 
-    <img src="@Model.ImageUrl" width="1200" height="440"/>
+    <img src="@Model.ImageUrl" width="1200" height="440" />
 
-    <h4 >@Model.AdditionalDescription</h4>
-
-    <a class="btn btn-success" href="javascript:history.back();">Back</a>
+    <h4>@Model.AdditionalDescription</h4>
+    <hr class="h-100 bg-success" />
+    <h1 class="display-4">Order this service</h1>
+    <small>We are going to call you or send you an email about your order.</small>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form method="post" asp-controller="Orders" asp-action="OrderService">
+                <div asp-validation-summary="All"></div>
+                <div class="form-group" hidden="">
+                    <input type="text" hidden="hidden" asp-for="ServiceType" value="@Model.ServiceType" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="Address" placeholder="Address to perform the service" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="ClientEmail" placeholder="Your email"/>
+                </div>
+                <button type="submit" class="btn btn-success">Order</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 

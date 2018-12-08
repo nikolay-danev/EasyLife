@@ -8,6 +8,7 @@
     <Compile Remove="Data\Migrations\20181115133642_Initial.cs" />
     <Compile Remove="Data\Migrations\20181115134044_UserAdditionalProperty.cs" />
     <Compile Remove="Data\Migrations\20181125164526_AdvertisementEntity.cs" />
+    <Compile Remove="Data\Migrations\20181205114807_DonatorPropertyUpdate.cs" />
   </ItemGroup>
 
   <ItemGroup>

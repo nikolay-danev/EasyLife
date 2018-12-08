@@ -5,6 +5,7 @@
 <div class="text-center">
     <h1 class="display-4">My Ads</h1>
 </div>
+<hr class="h-100 bg-success"/>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -28,7 +29,14 @@
             <th scope="row">@(i + 1)</th>
             <td>@currentAd.BusinessName</td>
             <td><a href="@currentAd.Url" id="textDecorationNone">@currentAd.Url</a></td>
-            <td>@status</td>
+            @if (status == "Active")
+            {
+                <td><span class="badge badge-pill badge-success">Active</span></td>
+            }
+            @if (status == "Inactive")
+            {
+                <td><span class="badge badge-pill badge-warning">Inactive</span></td>
+            }
             <td><a href="/Advertisement/Details/@currentAd.Id" class="btn btn-success">Details</a></td>
         </tr>
         }

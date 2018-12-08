@@ -12,9 +12,9 @@
 </div>
 <div class="logo-slider">
     <div class="logo-slide-track">
-       @for (int i = 0; i < 2; i++)
-       {
-           foreach (var adModel in @Model)
+        @for (int i = 0; i < 2; i++)
+        {
+            foreach (var adModel in @Model)
             {
                 <div class="slide">
                     <a href="@adModel.Url" target="_blank">
@@ -22,7 +22,7 @@
                     </a>
                 </div>
             }
-       }
+        }
     </div>
 </div>
 
@@ -58,6 +58,7 @@
 <hr class="h-100 bg-success" />
 
 <div class="text-center">
+    <h1 class="display-4">Order the service you need.</h1>
     <form asp-controller="Services" asp-action="Index" method="get">
         <button class="button button--secondary" type="submit">
             <span class="button__inner">Experience our services.</span>
@@ -72,17 +73,6 @@
     <form asp-controller="Advertisement" asp-action="Create" method="get">
         <button class="button button--secondary" type="submit">
             <span class="button__inner">Promote your business.</span>
-        </button>
-    </form>
-</div>
-
-<hr class="h-100 bg-success" />
-
-<div class="text-center">
-    <h1 class="display-4">Become a donator.</h1>
-    <form asp-controller="Services" asp-action="Index" method="get">
-        <button class="button button--secondary" type="submit">
-            <span class="button__inner">Support us.</span>
         </button>
     </form>
 </div>

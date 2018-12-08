@@ -34,10 +34,10 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Offices" asp-action="Index">Our offices</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">Services</a>
@@ -51,13 +51,15 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="MyAds">My Ads</a>
-
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="Create">Create Ad</a>
                                         <div class="dropdown-divider"></div>
                                         @if (User.IsInRole("Administrator"))
                                         {
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Create Service</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Offices" asp-action="AddOffice">Create Office</a>
                                             <a class="nav-link text-dark" asp-area="" asp-controller="Advertisement" asp-action="Index">Manage ads</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="AllOrders">Manage orders</a>
                                         }
                                     </div>
                                 </div>
@@ -92,6 +94,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false" 
+                type="text/javascript"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -99,6 +103,7 @@
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
@@ -106,9 +111,12 @@
                 crossorigin="anonymous"
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false" 
+                type="text/javascript"></script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+<script src="http://maps.google.com/maps/api/js?sensor=false" 
+        type="text/javascript"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

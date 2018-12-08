@@ -1,0 +1,38 @@
+﻿@using EasyLife.Domain.GlobalConstants
+@model ICollection<EasyLife.Domain.ViewModels.OfficeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Our Offices</h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone number</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < @Model.Count; i++)
+    {
+        var currentOffice = @Model.ToList()[i];
+        <tr>
+            <th scope="row">@(i + 1)</th>
+            <td>@currentOffice.Address</td>
+            <td>@currentOffice.PhoneNumber</td>
+            @if (this.User.IsInRole(RoleType.Administrator))
+            {
+                <td><a href="/Offices/Update/@currentOffice.Id" class="btn btn-success">Update</a></td>
+                <td><a href="/Offices/Delete/@currentOffice.Id" class="btn btn-danger">Delete</a></td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>

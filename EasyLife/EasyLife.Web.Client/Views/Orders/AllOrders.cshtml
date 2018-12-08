@@ -1,0 +1,51 @@
+﻿@using EasyLife.Domain.GlobalConstants
+@using EasyLife.Domain.GlobalConstatns
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model ICollection<EasyLife.Domain.ViewModels.OrderViewModel>
+@{
+    ViewData["Title"] = "MyOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h2 class="display-4">All orders</h2>
+</div>
+<hr class="h-100 bg-success"/>
+<form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" name="searchString" type="search" placeholder="Search Order" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+<table class="table table-hover mt-3">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Service type</th>
+            <th scope="col">Address to perform the service</th>
+            <th scope="col">Client email</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var order = Model.ToList()[i];
+        <tr>
+            <th scope="row">@(i + 1)</th>
+            <td>@order.ServiceType</td>
+            <td>@order.Address</td>
+            <td>@order.ClientEmail</td>
+            @if (order.Status == OrderStatus.InProgress)
+            {
+                <td><span class="badge badge-pill badge-warning">@OrderStatus.InProgress</span></td>
+                <td><a href="/Orders/CompleteOrder/@order.Id" class="btn btn-success">Complete order</a></td>
+            }
+            @if (order.Status == OrderStatus.Completed)
+            {
+                <td><span class="badge badge-pill badge-success">@OrderStatus.Completed</span></td>
+                <td><a href="/Orders/DeleteOrder/@order.Id" class="btn btn-danger">Delete order</a></td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>

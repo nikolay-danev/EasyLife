@@ -9,6 +9,8 @@ namespace EasyLife.Web.Client.Profile
 		{
 			CreateMap<Advertisement, AdvertisementViewModel>();
 			CreateMap<Service, ServiceViewModel>();
+			CreateMap<Office, OfficeViewModel>();
+			CreateMap<Order, OrderViewModel>();
 		}
 	}
 }

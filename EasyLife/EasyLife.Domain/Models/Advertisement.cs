@@ -11,8 +11,8 @@ namespace EasyLife.Domain.Models
 	{
 		public int Id { get; set; }
 
-		public int CreatorId { get; set; }
-		public User Creator { get; set; }
+		public string CreatorId { get; set; }
+		public virtual User Creator { get; set; }
 
 		[Required]
 		public string Url { get; set; }

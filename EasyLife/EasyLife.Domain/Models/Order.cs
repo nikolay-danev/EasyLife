@@ -5,18 +5,22 @@ using System.Text;
 
 namespace EasyLife.Domain.Models
 {
-	public class Donator
+	public class Order
 	{
 		public int Id { get; set; }
 
-		public int UserId { get; set; }
-		public User User { get; set; }
+		[Required]
+		public string ServiceType { get; set; }
 
 		[Required]
-		public decimal AmountDonated { get; set; }
+		public string Address { get; set; }
 
 		[Required]
-		public bool IsDeleted { get; set; }
+		public string Status { get; set; }
+
+		[Required]
+		public string ClientId { get; set; }
+		public virtual User Client { get; set; }
 
 		[Required]
 		public DateTime CreatedOn { get; set; }
