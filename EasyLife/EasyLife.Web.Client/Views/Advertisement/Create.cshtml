@@ -8,7 +8,7 @@
     <h2 class="display-4">Create your advertisement</h2>
     <p class="text-danger">Creating an ad gives it 5 days <span class="text-success">free</span> trial.</p>
 </div>
-
+<hr class="bg-success" />
 <div class="row justify-content-center">
     <div class="col-md-4">
         <form asp-controller="Advertisement" asp-action="Create" method="post" class="text-center" enctype="multipart/form-data">
@@ -28,7 +28,7 @@
                 <input asp-for="ImageFile" type="file" name="ImageFile" class="form-control" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Create</button>
+            <button type="submit" class="btn btn-success">Create</button>
         </form>
     </div>
 </div>

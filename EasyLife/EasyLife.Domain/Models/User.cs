@@ -8,6 +8,11 @@ namespace EasyLife.Domain.Models
 {
     public class User : IdentityUser
     {
+	    public User()
+	    {
+		    this.Messages = new HashSet<Message>();
+	    }
+
         [Required(ErrorMessage = "Username is required.")]
         [StringLength(60, ErrorMessage = "Username cannot be more than 60 characters.")]
         public string Nickname { get; set; }
@@ -18,5 +23,7 @@ namespace EasyLife.Domain.Models
 
 		[Range(0,double.MaxValue)]
 	    public double Discount { get; set; }
+
+	    public virtual ICollection<Message> Messages { get; set; }
     }
 }

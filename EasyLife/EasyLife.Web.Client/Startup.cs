@@ -12,6 +12,7 @@ using EasyLife.Domain.Models;
 using EasyLife.Application.Services.Interfaces;
 using EasyLife.Application.Services;
 using  AutoMapper;
+using EasyLife.Web.Client.Hubs;
 using EasyLife.Web.Client.Profile;
 
 namespace EasyLife.Web.Client
@@ -70,7 +71,7 @@ namespace EasyLife.Web.Client
 	        services.AddAutoMapper(x => x.AddProfile(new EasyLifeProfile()));
 	        services.AddScoped<IOfficeManager, OfficeManager>();
 	        services.AddScoped<IOrderManager, OrderManager>();
-
+	        services.AddSignalR();
 	        services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -95,7 +96,7 @@ namespace EasyLife.Web.Client
 	        app.UseResponseCaching();
 
 			app.UseAuthentication();
-
+	        app.UseSignalR(routes => { routes.MapHub<MessageHub>("/message"); });
 			app.UseMvc(routes =>
             {
                 routes.MapRoute(
