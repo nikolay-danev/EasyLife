@@ -79,7 +79,7 @@
             @RenderBody()
         </main>
     </div>
-    <div>
+    @*<div style="position: fixed; bottom: 0; ">
         <input type="text" id="newMessage" name="messageContent" />
         <input hidden="hidden" type="text" name="senderEmail" id="senderEmail" value="@this.User.Identity.Name" />
         <input hidden="hidden" type="text" name="receiverEmail" id="receiverEmail" value="nikolay.danev16@gmail.com" />
@@ -87,10 +87,36 @@
         <button id="getMessages" class="ml-4 btn btn-dark"><h5>GetMessages</h5></button>
         <div id="messagesList">
         </div>
-    </div>
+    </div>*@
+    <div id="live-chat" style="z-index: 10;">
+        <header class="clearfix">
+            <h4>EasyLife Support</h4>
+        </header>
+
+        <div class="chat">
+
+            <div class="chat-history">
+                <div id="messagesList">
+
+                    @*<div class="chat-message clearfix">
+            <div class="chat-message-content clearfix">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, nulla accusamus magni vel debitis numquam qui tempora rem voluptatem delectus!</p>
+            </div>
+        </div>
+        <hr>*@
+
+                </div>
+            </div>
+            <input type="text" id="newMessage" name="messageContent" placeholder="Type your message…" autofocus>
+            <input hidden="hidden" type="text" name="senderEmail" id="senderEmail" value="@this.User.Identity.Name" />
+            <input hidden="hidden" type="text" name="receiverEmail" id="receiverEmail" value="nikolay.danev16@gmail.com" />
+            <button id="sendNewMessage" class="ml-4 btn btn-dark"><h5>Send</h5></button>
+            <button id="getMessages" class="ml-4 btn btn-dark"><h5>GetMessages</h5></button>
+        </div> <!-- end chat -->
+    </div> <!-- end live-chat -->
     <footer class="border-top footer text-muted">
         <div class="container" id="footerStyle">
-            &copy; 2016 - @DateTime.Now.Year EasyLife - Services made for you.
+            &copy; 2016 - @DateTime.UtcNow.Year EasyLife - Services made for you.
         </div>
         <div class="container" id="footerStyle">
             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy | Terms</a>
