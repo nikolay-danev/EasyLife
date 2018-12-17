@@ -1,0 +1,26 @@
+﻿@model ICollection<EasyLife.Domain.ViewModels.MessageViewModel>
+@{
+    ViewData["Title"] = "MessageBox";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="overflow-y: auto">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">From</th>
+                <th scope="col">Content</th>
+                <th scope="col">Sent on</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in @Model)
+            {
+                <tr>
+                    <td>@message.SenderEmail</td>
+                    <td><a href="/MessageBox/OpenChat/@message.Id">@message.Content</a></td>
+                    <td>@message.CreatedOn</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

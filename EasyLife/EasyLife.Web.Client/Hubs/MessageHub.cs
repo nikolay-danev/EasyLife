@@ -3,13 +3,16 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EasyLife.Application.Services;
 using EasyLife.Domain.Models;
+using EasyLife.Domain.ViewModels;
 using EasyLife.Persistence.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace EasyLife.Web.Client.Hubs
 {
@@ -18,14 +21,16 @@ namespace EasyLife.Web.Client.Hubs
 	{
 		private readonly EasyLifeDbContext _context;
 		private readonly UserManager<User> _userManager;
+		private readonly IMapper _mapper;
 
 		private static readonly ConnectionMapping<string> Connections =
 			new ConnectionMapping<string>();
 
-		public MessageHub(EasyLifeDbContext context, UserManager<User> userManager)
+		public MessageHub(EasyLifeDbContext context, UserManager<User> userManager, IMapper mapper)
 		{
 			_context = context;
 			_userManager = userManager;
+			_mapper = mapper;
 		}
 
 		public override Task OnConnectedAsync()
@@ -33,7 +38,6 @@ namespace EasyLife.Web.Client.Hubs
 			string name = Context.User.Identity.Name;
 
 			Connections.Add(name, Context.ConnectionId);
-
 			return base.OnConnectedAsync();
 		}
 
@@ -58,31 +62,52 @@ namespace EasyLife.Web.Client.Hubs
 				SenderId = sender.Id,
 			};
 
-			//await this._context.Messages.AddAsync(newMessage);
-			//await this._context.SaveChangesAsync();
-			//Connections.TryGetValue(receiverEmail, out var connectionToSendMessage);
-
-			//if (!string.IsNullOrWhiteSpace(connectionToSendMessage))
-			//{
-			//await Clients.Caller.SendAsync("ReceiveMessage", newMessage);
-			//await Clients.Group(receiver.UserName).SendAsync("ReceiveMessage", newMessage);
-			//}
-
+			await Clients.Caller.SendAsync("ReceiveMessage", newMessage);
 			foreach (var connectionId in Connections.GetConnections(receiver.UserName))
 			{
-				await Clients.Caller.SendAsync("ReceiveMessage", newMessage);
-				await Clients.Client(connectionId).SendAsync("ReceiveMessage",  newMessage);
+				await Clients.Client(connectionId).SendAsync("AdminReceiveMessage", newMessage);
 			}
+
+			//if (!string.IsNullOrEmpty(newMessage.Content))
+			//{
+			//	await this._context.Messages.AddAsync(newMessage);
+			//	await this._context.SaveChangesAsync();
+			//}
+		}
+		public async Task AdminSendMessage(string senderEmail, string receiverEmail, string messageContent)
+		{
+			var sender = await this._userManager.Users.FirstOrDefaultAsync(x => x.Email == senderEmail);
+			var receiver = await this._userManager.Users.FirstOrDefaultAsync(x => x.UserName == receiverEmail);
+
+			var newMessage = new Message
+			{
+				Content = messageContent,
+				CreatedOn = DateTime.UtcNow,
+				ReceiverEmail = receiverEmail,
+				Sender = sender,
+				SenderId = sender.Id,
+			};
+
+			await Clients.Caller.SendAsync("AdminReceiveMessage", newMessage);
+			foreach (var connectionId in Connections.GetConnections(receiver.UserName))
+			{
+				await Clients.Client(connectionId).SendAsync("ReceiveMessage", newMessage);
+			}
+			//if (!string.IsNullOrEmpty(newMessage.Content))
+			//{
+			//	await this._context.Messages.AddAsync(newMessage);
+			//	await this._context.SaveChangesAsync();
+			//}
 		}
 
-
-	public async Task GetMessages()
+		public async Task GetMessages()
 		{
 			var caller = await this._userManager.Users.FirstOrDefaultAsync(x => x.Email == this.Context.User.Identity.Name);
 
-			var messages = await this._context.Messages.Where(x => x.SenderId == caller.Id).ToArrayAsync();
+			var messages = await this._context.Messages.Where(x => x.SenderId == caller.Id || x.ReceiverEmail == caller.Email).ToListAsync();
 
-			await this.Clients.Caller.SendAsync("ReceiveAllMessages", messages);
+			var info = _mapper.Map<List<MessageViewModel>>(messages);
+			await Clients.Caller.SendAsync("getAll", info);
 		}
 	}
 }

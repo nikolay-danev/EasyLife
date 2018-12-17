@@ -5,6 +5,8 @@
 
         $('.chat-message-counter').css('display', 'inline');
         $('.chat').css('display', 'none');
+
+       
     });
 
 
@@ -26,5 +28,7 @@
         $('#live-chat').fadeOut(300);
 
     });
+
+
 
 })();
