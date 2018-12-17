@@ -50,8 +50,7 @@ connection.on("getAll",
                             "</div ></li>";
                     }
                     $("#messagesList").append(chatInfo);
-                    $(".messages").animate({ scrollTop: $('.messages')[0].scrollHeight }, 1);
-                    $("#chatSound").play();
+                    //$(".messages").animate({ scrollTop: $('.messages')[0].scrollHeight }, 1);
                 }
                 isExecuted = true;
             }

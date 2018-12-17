@@ -68,11 +68,11 @@ namespace EasyLife.Web.Client.Hubs
 				await Clients.Client(connectionId).SendAsync("AdminReceiveMessage", newMessage);
 			}
 
-			//if (!string.IsNullOrEmpty(newMessage.Content))
-			//{
-			//	await this._context.Messages.AddAsync(newMessage);
-			//	await this._context.SaveChangesAsync();
-			//}
+			if (!string.IsNullOrEmpty(newMessage.Content))
+			{
+				await this._context.Messages.AddAsync(newMessage);
+				await this._context.SaveChangesAsync();
+			}
 		}
 		public async Task AdminSendMessage(string senderEmail, string receiverEmail, string messageContent)
 		{
@@ -93,11 +93,11 @@ namespace EasyLife.Web.Client.Hubs
 			{
 				await Clients.Client(connectionId).SendAsync("ReceiveMessage", newMessage);
 			}
-			//if (!string.IsNullOrEmpty(newMessage.Content))
-			//{
-			//	await this._context.Messages.AddAsync(newMessage);
-			//	await this._context.SaveChangesAsync();
-			//}
+			if (!string.IsNullOrEmpty(newMessage.Content))
+			{
+				await this._context.Messages.AddAsync(newMessage);
+				await this._context.SaveChangesAsync();
+			}
 		}
 
 		public async Task GetMessages()
