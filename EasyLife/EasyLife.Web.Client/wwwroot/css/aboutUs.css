@@ -71,7 +71,7 @@
     .team-member figure:hover figcaption {
         visibility: visible;
         color: #fff;
-        background: rgba(0,100,0, 0.6);
+        background: rgba(0,0,0, 0.35);
         /* Primary color, can be changed via colors.css */
         height: 100%;
         -webkit-transition: all 0.3s ease-in-out;
@@ -107,3 +107,28 @@
         -o-transition: all 0.4s ease-in-out;
         transition: all 0.4s ease-in-out;
     }
+.contact .fa:before {
+    display: inline-block;
+    opacity: 0.7;
+}
+
+.contact li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 1em;
+    text-align: center;
+}
+
+.contact p {
+    text-align: center;
+}
+
+.contact {
+    display: inline-block;
+    margin: 0 auto;
+    padding-left: 0;
+}
+
+.cont {
+    text-align: center;
+}

@@ -12,6 +12,7 @@ namespace EasyLife.Web.Client.Profile
 			CreateMap<Office, OfficeViewModel>();
 			CreateMap<Order, OrderViewModel>();
 			CreateMap<Message, MessageViewModel>();
+			CreateMap<Employee, EmployeeViewModel>();
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace EasyLife.Persistence.Data
 		public DbSet<Office> Offices { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<Message> Messages { get; set; }
+		public DbSet<Employee> Employees { get; set; }
 
 	    public EasyLifeDbContext(DbContextOptions<EasyLifeDbContext> options)
             : base(options)

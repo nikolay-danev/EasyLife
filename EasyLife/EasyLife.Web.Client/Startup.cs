@@ -72,8 +72,9 @@ namespace EasyLife.Web.Client
 	        services.AddScoped<IOfficeManager, OfficeManager>();
 	        services.AddScoped<IOrderManager, OrderManager>();
 	        services.AddScoped<IMessageManager, MessageManager>();
+	        services.AddScoped<IEmployeeManager, EmployeeManager>();
 
-	        services.AddSignalR();
+			services.AddSignalR();
 	        services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

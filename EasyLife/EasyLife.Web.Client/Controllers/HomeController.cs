@@ -19,14 +19,16 @@ namespace EasyLife.Web.Client.Controllers
 	    private readonly IAdvertisementManager _advertisementManager;
 	    private readonly IMapper _mapper;
 	    private readonly IHostingEnvironment _host;
+	    private readonly IEmployeeManager _employeeManager;
 
 	    public HomeController(IAdvertisementManager advertisementManager,
 		    IMapper mapper,
-		    IHostingEnvironment host)
+		    IHostingEnvironment host, IEmployeeManager employeeManager)
 	    {
 		    _advertisementManager = advertisementManager;
 		    _mapper = mapper;
 		    _host = host;
+		    _employeeManager = employeeManager;
 	    }
 
         public async Task<IActionResult> Index()
@@ -44,9 +46,11 @@ namespace EasyLife.Web.Client.Controllers
         }
 
 		[ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            return View();
+	        var employees = await _employeeManager.GetEmployees();
+	        var employeesViews = _mapper.Map<List<EmployeeViewModel>>(employees);
+	        return View(employeesViews);
         }
 
 	    [ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]
