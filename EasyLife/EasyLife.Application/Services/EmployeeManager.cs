@@ -28,13 +28,18 @@ namespace EasyLife.Application.Services
 
 		public void RemoveEmployee(Employee employee)
 		{
-			_dbContext.Employees.Remove(employee);
+			employee.IsFired = true;
 			_dbContext.SaveChanges();
 		}
 
 		public Task<List<Employee>> GetEmployees()
 		{
 			return _dbContext.Employees.ToListAsync();
+		}
+
+		public Task<Employee> GetEmployee(int id)
+		{
+			return _dbContext.Employees.FindAsync(id);
 		}
 	}
 }

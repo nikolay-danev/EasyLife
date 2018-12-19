@@ -12,6 +12,6 @@ namespace EasyLife.Application.Services.Interfaces
 		Task CreateEmployeeAsync(Employee employee);
 		void RemoveEmployee(Employee employee);
 		Task<List<Employee>> GetEmployees();
-
+		Task<Employee> GetEmployee(int id);
 	}
 }

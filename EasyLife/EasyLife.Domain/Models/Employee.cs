@@ -23,6 +23,9 @@ namespace EasyLife.Domain.Models
 		public string ProfilePictureUrl { get; set; }
 
 		[Required]
+		public bool IsFired { get; set; }
+
+		[Required]
 		public string FacebookUrl { get; set; }
 	}
 }

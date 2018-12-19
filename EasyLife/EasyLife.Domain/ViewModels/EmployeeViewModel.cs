@@ -8,6 +8,8 @@ namespace EasyLife.Domain.ViewModels
 {
 	public class EmployeeViewModel
 	{
+		public int Id { get; set; }
+
 		[Required]
 		[Display(Name = "Full name")]
 		public string FullName { get; set; }
@@ -25,6 +27,8 @@ namespace EasyLife.Domain.ViewModels
 		public IFormFile ProfilePicture { get; set; }
 
 		public string ProfilePictureUrl { get; set; }
+
+		public bool IsFired { get; set; }
 
 		[Required]
 		[Display(Name = "Facebook link")]

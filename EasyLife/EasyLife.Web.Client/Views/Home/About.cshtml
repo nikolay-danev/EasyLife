@@ -1,4 +1,5 @@
-﻿@model ICollection<EasyLife.Domain.ViewModels.EmployeeViewModel>
+﻿@using EasyLife.Domain.GlobalConstants
+@model ICollection<EasyLife.Domain.ViewModels.EmployeeViewModel>
 @{
     ViewData["Title"] = "About";
 }
@@ -36,24 +37,31 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
                         @foreach (var employee in Model)
                         {
-                            <div class="team-member">
-                                <figure>
-                                    <img src="@employee.ProfilePictureUrl" alt="" class="img-responsive">
-                                    <figcaption>
-                                        <p>@employee.ShortDescription</p>
-                                        <ul>
-                                            <li><a href="@employee.FacebookUrl" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-                                        </ul>
-                                    </figcaption>
-                                </figure>
-                                <h4>@employee.FullName</h4>
-                                <p>@employee.JobPosition</p>
-                            </div>
+                            if (!employee.IsFired)
+                            {
+                                <div class="col-md-4">
+                                    <div class="team-member">
+                                        <figure>
+                                            <img src="@employee.ProfilePictureUrl" alt="" class="img-fluid">
+                                            <figcaption>
+                                                <p>@employee.ShortDescription</p>
+                                                <ul>
+                                                    <li><a href="@employee.FacebookUrl" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
+                                                </ul>
+                                            </figcaption>
+                                        </figure>
+                                        <h4>@employee.FullName</h4>
+                                        <p>@employee.JobPosition</p>
+                                        @if (User.IsInRole(RoleType.Administrator))
+                                        {
+                                            <a class="btn btn-danger" onclick="fireEmployee(@employee.Id)">Fire employee</a>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         }
-                    </div>
                 </div>
             </div>
         </div>

@@ -33,3 +33,12 @@
 
 })();
 
+function fireEmployee(id) {
+    $.ajax({
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        url: '/Employee/Fire/',
+        dataType: "application/json",
+        data: JSON.stringify(id)
+    }).onsuccess(window.reload());
+}

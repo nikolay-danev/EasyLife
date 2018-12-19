@@ -41,6 +41,17 @@ namespace EasyLife.Web.Client.Controllers
 	    }
 
 		[HttpPost]
+	    public async Task<IActionResult> Fire([FromBody]int id)
+		{
+			var employee = await _employeeManager.GetEmployee(id);
+			if (employee != null)
+			{
+				_employeeManager.RemoveEmployee(employee);
+			}
+			return Redirect("/Home/About");
+		}
+
+		[HttpPost]
 	    public async Task<IActionResult> CreateEmployee(EmployeeViewModel model)
 	    {
 		    if (ModelState.IsValid)
@@ -65,6 +76,7 @@ namespace EasyLife.Web.Client.Controllers
 					FacebookUrl = model.FacebookUrl,
 					JobPosition = model.JobPosition,
 					ShortDescription = model.ShortDescription,
+					IsFired = false,
 					ProfilePictureUrl = "/images/EmployeesProfilePictures/" + $"{model.FullName.Replace(" ", "")}.jpg"
 				};
 
