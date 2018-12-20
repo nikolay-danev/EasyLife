@@ -2,51 +2,45 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using EasyLife.Application.Services.Interfaces;
 using EasyLife.Domain.Models;
-using EasyLife.Domain.ViewModels;
-using EasyLife.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EasyLife.Application.Services
+namespace EasyLife.Test
 {
 	public class OfficeManager : IOfficeManager
 	{
-		private readonly EasyLifeDbContext _context;
+		private readonly InMemoryContext _dbContext;
 
-		public OfficeManager(EasyLifeDbContext context)
+		public OfficeManager(InMemoryContext dbContext)
 		{
-			_context = context;
+			_dbContext = dbContext;
 		}
-
 		public Task<List<Office>> GetOfficesAsync()
 		{
-			return _context.Offices.ToListAsync();
+			return _dbContext.Offices.ToListAsync();
 		}
 
 		public Task AddOfficeAsync(Office office)
 		{
-			var result = _context.Offices.AddAsync(office);
-			 _context.SaveChanges();
+			var result = _dbContext.Offices.AddAsync(office);
+			_dbContext.SaveChanges();
 			return result;
 		}
 
 		public Task<Office> GetOfficeAsync(int id)
 		{
-			return _context.Offices.FindAsync(id);
+			throw new NotImplementedException();
 		}
 
 		public void UpdateOffice(Office office)
 		{
-			_context.Offices.Update(office);
-			_context.SaveChanges();
+			throw new NotImplementedException();
 		}
 
 		public void DeleteOffice(Office office)
 		{
-			_context.Offices.Remove(office);
-			_context.SaveChanges();
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -9,13 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{A3B208
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{27A85582-3283-43B8-B9EA-0352F2285E71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLife.Application", "EasyLife.Application\EasyLife.Application.csproj", "{2B3B566C-6E06-4271-8A6C-8638273E06EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyLife.Application", "EasyLife.Application\EasyLife.Application.csproj", "{2B3B566C-6E06-4271-8A6C-8638273E06EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLife.Domain", "EasyLife.Domain\EasyLife.Domain.csproj", "{C3304E99-B166-4887-9CEB-B8723AF0289A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyLife.Domain", "EasyLife.Domain\EasyLife.Domain.csproj", "{C3304E99-B166-4887-9CEB-B8723AF0289A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DB7A6DC8-EB61-4824-B4F9-B15A0019DF6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLife.Persistence", "EasyLife.Persistence\EasyLife.Persistence.csproj", "{50D70390-D566-40CA-BCBA-99F5EBF97491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyLife.Persistence", "EasyLife.Persistence\EasyLife.Persistence.csproj", "{50D70390-D566-40CA-BCBA-99F5EBF97491}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9AE040EF-3CD9-4141-968E-35F36550099B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLife.Test", "EasyLife.Test\EasyLife.Test.csproj", "{6D041B31-AF3E-4063-8B45-70ECCD891414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{50D70390-D566-40CA-BCBA-99F5EBF97491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D70390-D566-40CA-BCBA-99F5EBF97491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D70390-D566-40CA-BCBA-99F5EBF97491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D041B31-AF3E-4063-8B45-70ECCD891414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D041B31-AF3E-4063-8B45-70ECCD891414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D041B31-AF3E-4063-8B45-70ECCD891414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D041B31-AF3E-4063-8B45-70ECCD891414}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 		{2B3B566C-6E06-4271-8A6C-8638273E06EC} = {27A85582-3283-43B8-B9EA-0352F2285E71}
 		{C3304E99-B166-4887-9CEB-B8723AF0289A} = {27A85582-3283-43B8-B9EA-0352F2285E71}
 		{50D70390-D566-40CA-BCBA-99F5EBF97491} = {DB7A6DC8-EB61-4824-B4F9-B15A0019DF6C}
+		{6D041B31-AF3E-4063-8B45-70ECCD891414} = {9AE040EF-3CD9-4141-968E-35F36550099B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE3AC840-08DB-43A2-88F6-1C39815404F1}

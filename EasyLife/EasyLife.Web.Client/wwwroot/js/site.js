@@ -40,5 +40,6 @@ function fireEmployee(id) {
         url: '/Employee/Fire/',
         dataType: "application/json",
         data: JSON.stringify(id)
-    }).onsuccess(window.reload());
+    });
+    window.location.reload();
 }
