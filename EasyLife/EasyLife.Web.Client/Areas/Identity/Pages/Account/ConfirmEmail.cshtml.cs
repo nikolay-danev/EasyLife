@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
 namespace EasyLife.Web.Client.Areas.Identity.Pages.Account
 {
@@ -14,15 +15,19 @@ namespace EasyLife.Web.Client.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-
-        public ConfirmEmailModel(UserManager<User> userManager)
+	    private readonly SignInManager<User> _signInManager;
+	    private readonly ILogger<LoginModel> _logger;
+		public ConfirmEmailModel(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<LoginModel> logger)
         {
             _userManager = userManager;
+			
+            _signInManager = signInManager;
+            _logger = logger;
         }
 
-        public async Task<IActionResult> OnGetAsync(string userId, string code)
+        public async Task<IActionResult> OnGetAsync(string userId, string userCode)
         {
-            if (userId == null || code == null)
+            if (userId == null || userCode == null)
             {
                 return RedirectToPage("/Index");
             }
@@ -33,13 +38,14 @@ namespace EasyLife.Web.Client.Areas.Identity.Pages.Account
                 return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, code);
+            var result = await _userManager.ConfirmEmailAsync(user, userCode);
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
             }
 
-            return Page();
-        }
+			await _signInManager.SignInAsync(user, isPersistent: false);
+			return Page();
+		}
     }
 }

@@ -14,6 +14,7 @@ using EasyLife.Application.Services;
 using  AutoMapper;
 using EasyLife.Web.Client.Hubs;
 using EasyLife.Web.Client.Profile;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace EasyLife.Web.Client
 {
@@ -73,8 +74,9 @@ namespace EasyLife.Web.Client
 	        services.AddScoped<IOrderManager, OrderManager>();
 	        services.AddScoped<IMessageManager, MessageManager>();
 	        services.AddScoped<IEmployeeManager, EmployeeManager>();
+	        services.AddScoped<IEmailSender, EmailSender>();
 
-			services.AddSignalR();
+	        services.AddSignalR();
 	        services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
