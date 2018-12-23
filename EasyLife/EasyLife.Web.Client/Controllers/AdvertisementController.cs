@@ -98,7 +98,7 @@ namespace EasyLife.Web.Client.Controllers
 					CreatedOn = DateTime.UtcNow,
 					Creator = currentUser,
 					ExpirationDate = DateTime.UtcNow.AddDays(5),
-					ImageUrl = filePath,
+					ImageUrl = "/images/advertisementImages/" + $"{model.BusinessName.Replace(" ", "")}.jpg",
 					BusinessName = model.BusinessName
 				};
 
@@ -116,8 +116,6 @@ namespace EasyLife.Web.Client.Controllers
 
 			var user = this._userManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name);
 			var userRoles = await this._userManager.GetRolesAsync(user);
-			//advertisement.ImageUrl = advertisement.ImageUrl.Replace(_host.WebRootPath, "");
-			advertisement.ImageUrl = ImageUrlRefactor.RefactorUrl(advertisement, _host.WebRootPath);
 
 			if (advertisement == null || (advertisement.Creator != user && !userRoles.Contains(RoleType.Administrator)))
 			{

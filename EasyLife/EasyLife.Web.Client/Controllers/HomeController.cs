@@ -38,7 +38,6 @@ namespace EasyLife.Web.Client.Controllers
 
 	        foreach (var advertisement in models)
 	        {
-		        advertisement.ImageUrl = ImageUrlRefactor.RefactorUrl(advertisement, _host.WebRootPath);
 		        viewModels.Add(_mapper.Map<AdvertisementViewModel>(advertisement));
 	        }
 
