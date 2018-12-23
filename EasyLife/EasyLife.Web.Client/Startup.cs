@@ -55,17 +55,17 @@ namespace EasyLife.Web.Client
 
 			services.AddScoped<IUserClaimsPrincipalFactory<User>, UserClaimsPrincipalFactory<User, IdentityRole>>();
 
-            services.AddAuthentication()
-                .AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = Configuration["web:client_id"];
-                googleOptions.ClientSecret = Configuration["web:client_secret"];
-            })
-            .AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Configuration["facebook:appId"];
-                facebookOptions.AppSecret = Configuration["facebook:appSecret"];
-            }); ;
+			services.AddAuthentication()
+				.AddGoogle(googleOptions =>
+			{
+				googleOptions.ClientId = Configuration["web:client_id"];
+				googleOptions.ClientSecret = Configuration["web:client_secret"];
+			})
+			.AddFacebook(facebookOptions =>
+			{
+				facebookOptions.AppId = Configuration["facebook:appId"];
+				facebookOptions.AppSecret = Configuration["facebook:appSecret"];
+			});
 
 			services.AddScoped<IServiceManager, ServiceManager>();
 			services.AddScoped<IAdvertisementManager, AdvertisementManager>();

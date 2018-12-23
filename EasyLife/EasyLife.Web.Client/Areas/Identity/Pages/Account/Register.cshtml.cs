@@ -6,6 +6,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using EasyLife.Application.Services;
 using EasyLife.Domain.GlobalConstants;
 using EasyLife.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -82,8 +83,16 @@ namespace EasyLife.Web.Client.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email, Nickname = Input.Nickname, CreatedOn = DateTime.UtcNow, IsDeleted = false };
-                var areUsersCreated = _userManager.Users.Any();
+                var user = new User
+                {
+	                UserName = Input.Email,
+	                Email = Input.Email,
+	                Nickname = Input.Nickname,
+	                CreatedOn = DateTime.UtcNow,
+	                IsDeleted = false
+                };
+
+				var areUsersCreated = _userManager.Users.Any();
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

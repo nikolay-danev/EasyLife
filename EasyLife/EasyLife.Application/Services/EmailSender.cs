@@ -50,8 +50,6 @@ namespace EasyLife.Application.Services
 					"zvojihzzeglgohbw"
 				);
 				await client.SendAsync(mimeMessage);
-				Console.WriteLine("The mail has been sent successfully !!");
-				Console.ReadLine();
 				await client.DisconnectAsync(true);
 			}
 		}

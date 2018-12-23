@@ -37,12 +37,6 @@
             <input hidden="hidden" type="text" name="senderEmail" id="senderEmail" value="@this.User.Identity.Name" />
             <input hidden="hidden" type="text" name="receiverEmail" id="receiverEmail" value="@Model.FirstOrDefault(x => x.SenderEmail != this.User.Identity.Name)?.SenderEmail" />
         </div>
-        <div class="send_message">
-            <div class="icon"></div>
-            <div class="text">
-                Send
-            </div>
-        </div>
     </div>
 </div>
 <div class="message_template">

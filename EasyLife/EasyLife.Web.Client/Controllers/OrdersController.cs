@@ -10,6 +10,7 @@ using EasyLife.Domain.Models;
 using EasyLife.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,14 +21,17 @@ namespace EasyLife.Web.Client.Controllers
 		private readonly IOrderManager _orderManager;
 		private readonly IMapper _mapper;
 		private readonly UserManager<User> _userManager;
+		private readonly IEmailSender _emailSender;
 
 		public OrdersController(IOrderManager orderManager,
 			IMapper mapper,
-			UserManager<User> userManager)
+			UserManager<User> userManager,
+			IEmailSender emailSender)
 		{
 			_orderManager = orderManager;
 			_mapper = mapper;
 			_userManager = userManager;
+			_emailSender = emailSender;
 		}
 
 		[HttpPost]
@@ -50,6 +54,10 @@ namespace EasyLife.Web.Client.Controllers
 				};
 
 				await this._orderManager.CreateOrderAsync(order);
+				TempData["StatusMessage"] = "We sent you an email for your service order. Thank you.";
+				await _emailSender.SendEmailAsync(currentUser.Email,
+					"Service order",
+					$"Thank you for ordering {model.ServiceType} service. Тhe address you provided to perform the service is {model.Address}");
 				return this.Redirect("/Orders/MyOrders");
 			}
 
@@ -66,6 +74,10 @@ namespace EasyLife.Web.Client.Controllers
 
 			var viewModels = _mapper.Map<List<OrderViewModel>>(userOrders);
 
+			if (TempData["StatusMessage"] != null)
+			{
+				ViewBag.StatusMessage = TempData["StatusMessage"].ToString();
+			}
 			return this.View(viewModels);
 		}
 
