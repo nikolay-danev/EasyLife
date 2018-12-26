@@ -41,7 +41,7 @@ namespace EasyLife.Web.Client.Controllers
 		        viewModels.Add(_mapper.Map<AdvertisementViewModel>(advertisement));
 	        }
 
-            return View(viewModels);
+	        return View(viewModels);
         }
 
 		[ResponseCache(Duration = 120, Location = ResponseCacheLocation.Client)]

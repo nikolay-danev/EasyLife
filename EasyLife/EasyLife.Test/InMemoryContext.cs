@@ -9,7 +9,6 @@ namespace EasyLife.Test
 {
 	public class InMemoryContext : EasyLifeDbContext
 	{
-		public DbSet<Office> Offices { get; set; }
 		public InMemoryContext(DbContextOptions<EasyLifeDbContext> options) : base(options)
 		{
 		}

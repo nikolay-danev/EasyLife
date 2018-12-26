@@ -16,11 +16,15 @@
         {
             foreach (var adModel in @Model)
             {
-                <div class="slide">
-                    <a href="@adModel.Url" target="_blank">
-                        <img src="@adModel.ImageUrl" height="80" width="140" alt="@adModel.BusinessName" />
-                    </a>
-                </div>
+                string[] status = { adModel.ExpirationDate < DateTime.UtcNow ? "Inactive" : "Active" };
+                if (status[0] == "Active")
+                {
+                    <div class="slide">
+                        <a href="@adModel.Url" target="_blank">
+                            <img src="@adModel.ImageUrl" height="80" width="140" alt="@adModel.BusinessName" />
+                        </a>
+                    </div>
+                }
             }
         }
     </div>
